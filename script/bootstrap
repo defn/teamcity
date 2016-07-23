@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+function bootstrap {
+  local shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
+  source "$shome/script/profile"
+
+
+  local ver_teamcity="10.0"
+  local url_teamcity="https://download.jetbrains.com/teamcity/TeamCity-${ver_teamcity}.tar.gz"
+  local fnm_teamcity="TeamCity-${ver_teamcity}.tar.gz"
+
+  cache curl "$fnm_teamcity" "$url_teamcity"
+
+  mkdir -p "$shome/vendor/teamcity-${ver_teamcity}"
+  (cd "$shome/vendor/teamcity-${ver_teamcity}" && tar xvfz "${CACHE_DIR}/curl/$fnm_teamcity")
+
+  "$shome/script/update"
+}
+
+bootstrap
