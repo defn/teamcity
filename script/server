@@ -10,6 +10,7 @@ function teamcity_server {
 
   case "${1:-}" in
     default)
+      perl -pe 's{^(\s*)(\./catalina.sh)}{$1 exec $2}' -i vendor/teamcity-10.0/TeamCity/bin/teamcity-server.sh
       exec "$shome/vendor/teamcity-10.0/TeamCity/bin/teamcity-server.sh" run
       ;;
     *)
