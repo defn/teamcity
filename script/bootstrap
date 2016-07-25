@@ -14,6 +14,9 @@ function bootstrap {
   mkdir -p "$shome/vendor/teamcity-${ver_teamcity}"
   (cd "$shome/vendor/teamcity-${ver_teamcity}" && tar xvfz "${CACHE_DIR}/curl/$fnm_teamcity")
 
+  mkdir -p "$shome/vendor/teamcity-${ver_teamcity}-agent"
+  (cd "$shome/vendor/teamcity-${ver_teamcity}-agent" && tar xvfz "$(find "$shome/vendor/teamcity-10.0/" -name buildAgent.zip)")
+
   "$shome/script/update"
 }
 
