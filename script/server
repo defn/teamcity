@@ -9,13 +9,13 @@ function teamcity_server {
   fi
 
   case "${1:-}" in
-    default|teamcity)
-      perl -pe 's{^(\s*)(\./catalina.sh)}{$1 exec $2}' -i "$shome/vendor/teamcity-10.0/TeamCity/bin/teamcity-server.sh"
-      exec "$shome/vendor/teamcity-10.0/TeamCity/bin/teamcity-server.sh" run
-      ;;
-    agent)
+    default|agent|teamcity)
       perl -pe 's{^(\s*)("\$JRE_HOME/bin/java")}{$1 exec $2} if m{jetbrains.buildServer.agent.Launcher}' -i "$shome/vendor/teamcity-10.0-agent/bin/agent.sh"
       exec "$shome/vendor/teamcity-10.0-agent/bin/agent.sh" run
+      ;;
+    server)
+      perl -pe 's{^(\s*)(\./catalina.sh)}{$1 exec $2}' -i "$shome/vendor/teamcity-10.0/TeamCity/bin/teamcity-server.sh"
+      exec "$shome/vendor/teamcity-10.0/TeamCity/bin/teamcity-server.sh" run
       ;;
      *)
       echo "ERROR: unknown server command: ${1:-/not-supplied/}" 1>&2
